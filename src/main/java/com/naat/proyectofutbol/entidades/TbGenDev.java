@@ -1,14 +1,17 @@
 package com.naat.proyectofutbol.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbgendev")
 public class TbGenDev {
 
-	private static final long serialVersionUID = 1L;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String tl_codigo;
 	private String tl_clave;
 	private String tl_descri1;
@@ -58,8 +61,6 @@ public class TbGenDev {
 		this.tl_descri2 = tl_descri2;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 
 }
