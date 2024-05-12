@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.naat.proyectofutbol.excepciones.ResourceNotFoundException;
-import com.naat.proyectofutbol.modelo.Usuario;
-import com.naat.proyectofutbol.modelo.UsuarioRol;
+
+
 import com.naat.proyectofutbol.repositorios.UsuarioRepository;
-import com.naat.proyectofutbol.repositorios.UsuarioRolRepository;
+import com.naat.proyectofutbol.repositorios.LoginRepository;
 
 
 
@@ -34,17 +34,17 @@ import com.naat.proyectofutbol.repositorios.UsuarioRolRepository;
 public class UsuarioRolController {
 
 
-	  private final UsuarioRolRepository usuarioRolRepository;
+	  private final LoginRepository usuarioRolRepository;
 	  @Autowired
 	  private  UsuarioRepository usuarioRepository;
 	  
 	  
 	  @Autowired
-	  public UsuarioRolController(UsuarioRolRepository usuarioRolRepository) {
+	  public UsuarioRolController(LoginRepository usuarioRolRepository) {
 	    this.usuarioRolRepository = usuarioRolRepository;
 	 
 	  }
-
+/*
 	  @GetMapping
 	  public ResponseEntity<List<UsuarioRol>> obtenerTodosLosUsuarioRoles() {
 	    List<UsuarioRol> usuarioRoles = usuarioRolRepository.findAll();
@@ -148,6 +148,6 @@ public class UsuarioRolController {
 	        }
 	    }
 	    
-
+*/
 	  
 }

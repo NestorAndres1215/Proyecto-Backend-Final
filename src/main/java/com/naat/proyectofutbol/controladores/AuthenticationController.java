@@ -21,7 +21,7 @@ import com.naat.proyectofutbol.entidades.Menu;
 import com.naat.proyectofutbol.excepciones.UsuarioNotFoundException;
 import com.naat.proyectofutbol.modelo.JwtRequest;
 import com.naat.proyectofutbol.modelo.JwtResponse;
-import com.naat.proyectofutbol.modelo.Usuario;
+import com.naat.proyectofutbol.modelo.TbLogin;
 import com.naat.proyectofutbol.servicios.impl.UserDetailsServiceImpl;
 
 
@@ -66,8 +66,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/actual-usuario")
-    public Usuario obtenerUsuarioActual(Principal principal){
-        return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
+    public TbLogin obtenerUsuarioActual(Principal principal){
+        return (TbLogin) this.userDetailsService.loadUserByUsername(principal.getName());
     }
 
 

@@ -10,7 +10,10 @@ import java.io.IOException;
 
 public class CustomGrantedAuthorityDeserializer extends StdDeserializer<GrantedAuthority> {
 
-    public CustomGrantedAuthorityDeserializer() {
+  
+	private static final long serialVersionUID = 1L;
+
+	public CustomGrantedAuthorityDeserializer() {
         super(GrantedAuthority.class);
     }
 

@@ -1,91 +1,85 @@
 package com.naat.proyectofutbol.controladores;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.naat.proyectofutbol.entidades.Menu;
-import com.naat.proyectofutbol.modelo.Rol;
-import com.naat.proyectofutbol.modelo.Usuario;
-import com.naat.proyectofutbol.modelo.UsuarioRol;
-import com.naat.proyectofutbol.repositorios.MenuRepository;
+import com.naat.proyectofutbol.entidades.TbUsuario;
+
+import com.naat.proyectofutbol.modelo.TbLogin;
+
 import com.naat.proyectofutbol.servicios.UsuarioService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin("*")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+	@Autowired
+	private UsuarioService usuarioService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
- // registrar usuarios normales
-    @PostMapping("/")
-    public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
-        usuario.setPerfil("default.png");
 
-        usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        Set<UsuarioRol> usuarioRoles = new HashSet<>();
+	// registrar usuarios normales
+	/*
+	 * @PostMapping("/") public ResponseEntity<UsuarioRol>
+	 * guardarUsuario(@RequestBody UsuarioRol usuarios) throws Exception {
+	 * usuarios.setUs_contra(this.bCryptPasswordEncoder.encode(usuarios.getUs_contra
+	 * ())); return ResponseEntity.ok(usuarioService.guardarUsuario(usuarios));
+	 * 
+	 * }
+	 */
 
-        Rol rol = new Rol();
-        rol.setRolId(1L);
-        rol.setRolNombre("NORMAL");
+	@PostMapping("/")
+	public ResponseEntity<Map<String, Object>> guardarUsuario(@RequestBody TbUsuario usuario) throws Exception {
+	   
+	    TbLogin user = new TbLogin();
+	    user.setUs_codigo(usuario.getUl_codigo());
+	    user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+	    user.setUsername(usuario.getUsername());
+	    user.setUs_rol(usuario.getUl_rol());
+	    
+	    TbLogin loginGuardado = usuarioService.guardarlogin(user);
+	    
+	    TbUsuario usuarioGuardado = usuarioService.guardarUsuario(usuario);
+	    
+	    // Crear un mapa para almacenar los objetos guardados
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("usuario", usuarioGuardado);
+	    response.put("login", loginGuardado);
+	    
+	    // Devolver el mapa en la respuesta
+	    return ResponseEntity.ok(response);
+	}
 
-        UsuarioRol usuarioRol = new UsuarioRol();
-        usuarioRol.setUsuario(usuario);
-        usuarioRol.setRol(rol);
-
-        usuarioRoles.add(usuarioRol);
-        return usuarioService.guardarUsuario(usuario,usuarioRoles);
-    }
 
 // registrar usuarios admin
-    
-    
-    @PostMapping("/admin/")
-    public Usuario guardarUsuarioAdmin(@RequestBody Usuario usuario) throws Exception{
-        usuario.setPerfil("default.png");
 
-        usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+	/*
+	 * @PostMapping("/admin/") public Usuario guardarUsuarioAdmin(@RequestBody
+	 * UsuarioRol usuario) { usuario.setPerfil("default.png");
+	 * 
+	 * usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()))
+	 * ;
+	 * 
+	 * Set<UsuarioRol> usuarioRoles = new HashSet<>();
+	 * 
+	 * Rol rol = new Rol(); rol.setRolId(2L); rol.setRolNombre("ADMIN");
+	 * 
+	 * UsuarioRol usuarioRol = new UsuarioRol(); usuarioRol.setUsuario(usuario);
+	 * usuarioRol.setRol(rol);
+	 * 
+	 * usuarioRoles.add(usuarioRol); return usuarioService.guardarUsuario(
+	 * usuarioRoles); }
+	 */
 
-        Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
-        Rol rol = new Rol();
-        rol.setRolId(2L);
-        rol.setRolNombre("ADMIN");
-
-        UsuarioRol usuarioRol = new UsuarioRol();
-        usuarioRol.setUsuario(usuario);
-        usuarioRol.setRol(rol);
-
-        usuarioRoles.add(usuarioRol);
-        return usuarioService.guardarUsuario(usuario,usuarioRoles);
-    }
-    
-    
-  
-    @GetMapping("/{username}")
-    public Usuario obtenerUsuario(@PathVariable("username") String username){
-        return usuarioService.obtenerUsuario(username);
-    }
-    @GetMapping("/")
-    public ResponseEntity<?> listarUsuario(){
-        return ResponseEntity.ok(usuarioService.obtenerMUsuario());
-    }
-    
-	
-
-    @DeleteMapping("/{usuarioId}")
-    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
-        usuarioService.eliminarUsuario(usuarioId);
-    }
-    
 
 }
