@@ -1,7 +1,6 @@
 package com.naat.proyectofutbol.controladores;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.naat.proyectofutbol.configuraciones.JwtUtils;
-import com.naat.proyectofutbol.entidades.Menu;
 import com.naat.proyectofutbol.excepciones.UsuarioNotFoundException;
 import com.naat.proyectofutbol.modelo.JwtRequest;
 import com.naat.proyectofutbol.modelo.JwtResponse;

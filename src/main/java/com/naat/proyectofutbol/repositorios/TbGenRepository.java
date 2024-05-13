@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.naat.proyectofutbol.entidades.TbGen;
 
 @Repository
-public interface tbGenRepository extends JpaRepository<TbGen, String> {
+public interface TbGenRepository extends JpaRepository<TbGen, String> {
 
 	@Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2,)}", nativeQuery = true)
 	List<Map<String, Object[]>> ListaGenerales(@Param("opcion") int opcion, @Param("tl_codigo") String tl_codigo,

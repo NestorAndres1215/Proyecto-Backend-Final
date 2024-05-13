@@ -6,13 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.naat.proyectofutbol.servicios.UsuarioService;
+import com.naat.proyectofutbol.servicios.TbUsuarioService;
+
 
 
 @SpringBootApplication
 public class ProyectoFutbolApplication implements CommandLineRunner{
 	@Autowired
-	private UsuarioService usuarioService;
+	private TbUsuarioService usuarioService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

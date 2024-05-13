@@ -21,8 +21,7 @@ public class CustomGrantedAuthorityDeserializer extends StdDeserializer<GrantedA
     public GrantedAuthority deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        // Implementa la lógica de deserialización según tus necesidades
-        // Puedes crear instancias de clases concretas que implementen GrantedAuthority
-        return null; // Debes reemplazar esto con tu lógica
+        System.out.println(node);
+        return null; 
     }
 }

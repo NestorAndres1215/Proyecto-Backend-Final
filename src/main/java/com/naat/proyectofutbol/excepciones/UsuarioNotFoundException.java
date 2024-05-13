@@ -3,7 +3,9 @@ package com.naat.proyectofutbol.excepciones;
 
 public class UsuarioNotFoundException extends Exception{
 
-    public UsuarioNotFoundException(){
+    private static final long serialVersionUID = 1L;
+
+	public UsuarioNotFoundException(){
         super("El usuario con ese username no existe en la base de datos , vuelva a intentar !!");
     }
 

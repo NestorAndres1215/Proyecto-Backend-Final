@@ -1,24 +1,13 @@
 package com.naat.proyectofutbol.entidades;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.naat.proyectofutbol.modelo.Authority;
 
 
 
@@ -36,7 +25,8 @@ public class TbUsuario  {
 	private String password;
 	private String ul_nombre;
 	private String ul_apellido;
-	
+	@Lob
+	private byte[] ul_perfil;
 	private String ul_correo;
 	private String ul_direccion;
 	private String ul_telefono;
@@ -121,6 +111,12 @@ public class TbUsuario  {
 	}
 	public void setUl_estado(boolean ul_estado) {
 		this.ul_estado = ul_estado;
+	}
+	public byte[] getUl_perfil() {
+		return ul_perfil;
+	}
+	public void setUl_perfil(byte[] ul_perfil) {
+		this.ul_perfil = ul_perfil;
 	}
 	
 

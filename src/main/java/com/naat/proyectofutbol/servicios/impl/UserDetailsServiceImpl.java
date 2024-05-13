@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.naat.proyectofutbol.modelo.TbLogin;
-import com.naat.proyectofutbol.repositorios.LoginRepository;
+import com.naat.proyectofutbol.repositorios.TbLoginRepository;
 
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private LoginRepository usuarioRepository;
+	private TbLoginRepository usuarioRepository;
 	@Override
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

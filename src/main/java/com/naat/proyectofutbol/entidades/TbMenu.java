@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "menu")
-public class Menu {
+public class TbMenu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long menuId;
@@ -19,7 +19,7 @@ public class Menu {
 	private String menuIcono;
 	private String menuCategoria;
 	private String menuRuta;
-	public Menu(String menuNivel, String menuNombre, String menuTipo, String menuCodigo, String menuIcono,
+	public TbMenu(String menuNivel, String menuNombre, String menuTipo, String menuCodigo, String menuIcono,
 			String menuCategoria, String menuRuta) {
 		super();
 		this.menuNivel = menuNivel;
@@ -30,7 +30,7 @@ public class Menu {
 		this.menuCategoria = menuCategoria;
 		this.menuRuta = menuRuta;
 	}
-	public Menu() {
+	public TbMenu() {
 		super();
 	}
 	public Long getMenuId() {

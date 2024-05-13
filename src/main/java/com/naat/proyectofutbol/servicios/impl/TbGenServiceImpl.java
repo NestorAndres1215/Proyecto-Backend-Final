@@ -5,12 +5,12 @@ import java.util.Map;
 
 import com.naat.proyectofutbol.entidades.TbGen;
 import com.naat.proyectofutbol.entidades.TbGenDev;
-import com.naat.proyectofutbol.repositorios.tbGenRepository;
+import com.naat.proyectofutbol.repositorios.TbGenRepository;
 import com.naat.proyectofutbol.servicios.TbGenService;
 
 public class TbGenServiceImpl implements TbGenService {
 	
-	private tbGenRepository repository;
+	private TbGenRepository repository;
 
 	@Override
 	public List<Map<String, Object[]>> listarGenerales(int opcion, TbGen obj) {
