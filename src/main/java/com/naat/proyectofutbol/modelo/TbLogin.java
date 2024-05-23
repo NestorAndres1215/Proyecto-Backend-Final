@@ -14,22 +14,17 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-
 @Entity
 @Table(name = "tblogin")
 public class TbLogin implements UserDetails {
 
-
-
 	@Id
 	private String us_codigo;
-	 @Column(name = "us_usuario")
-	    private String username;
-	 @Column(name = "us_contra")
+	@Column(name = "us_usuario")
+	private String username;
+	@Column(name = "us_contra")
 	private String password;
 	private String us_rol;
-
 
 	public TbLogin(String us_codigo, String username, String password, String us_rol) {
 		super();
@@ -50,8 +45,6 @@ public class TbLogin implements UserDetails {
 	public void setUs_codigo(String us_codigo) {
 		this.us_codigo = us_codigo;
 	}
-
-	
 
 	public String getUsername() {
 		return username;
@@ -76,38 +69,35 @@ public class TbLogin implements UserDetails {
 	public void setUs_rol(String us_rol) {
 		this.us_rol = us_rol;
 	}
-	 @Override
-	    public Collection<? extends GrantedAuthority> getAuthorities() {
-	        Set<Authority> autoridades = new HashSet<>();
-	      
-	            autoridades.add(new Authority(getUs_rol()));
-	     
-	        return autoridades;
-	    }
 
-		@Override
-		public boolean isEnabled() {
-			// TODO Auto-generated method stub
-			return true;
-		}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<Authority> autoridades = new HashSet<>();
 
-	    @Override
-	    public boolean isAccountNonExpired() {
-	        return true;
-	    }
+		autoridades.add(new Authority(getUs_rol()));
 
-	    @Override
-	    public boolean isAccountNonLocked() {
-	        return true;
-	    }
+		return autoridades;
+	}
 
-	    @Override
-	    public boolean isCredentialsNonExpired() {
-	        return true;
-	    }
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-	
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
 }

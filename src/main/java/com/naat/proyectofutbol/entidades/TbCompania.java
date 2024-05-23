@@ -6,6 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 @Entity
@@ -13,7 +18,7 @@ import java.util.Date;
 public class TbCompania {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private String com_codigo;
 	private String com_nombre;
 	@Lob
@@ -24,6 +29,7 @@ public class TbCompania {
 	private String com_direccion;
 	private String com_pais;
 	private String com_sector;
+	 @Temporal(TemporalType.TIMESTAMP)
 	private Date com_fecha_de_fundacion;
 	private String com_descripcion;
 	public TbCompania(String com_codigo, String com_nombre, byte[] com_logo, String com_ruc, String com_telefono,
@@ -99,6 +105,7 @@ public class TbCompania {
 	public void setCom_sector(String com_sector) {
 		this.com_sector = com_sector;
 	}
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
 	public Date getCom_fecha_de_fundacion() {
 		return com_fecha_de_fundacion;
 	}

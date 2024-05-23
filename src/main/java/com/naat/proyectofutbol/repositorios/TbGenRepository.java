@@ -13,13 +13,16 @@ import com.naat.proyectofutbol.entidades.TbGen;
 @Repository
 public interface TbGenRepository extends JpaRepository<TbGen, String> {
 
-	@Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2,)}", nativeQuery = true)
-	List<Map<String, Object[]>> ListaGenerales(@Param("opcion") int opcion, @Param("tl_codigo") String tl_codigo,
-			@Param("tl_clave") String tl_clave, @Param("tl_descri1") String tl_descri1,
-			@Param("tl_descri2") String tl_descri2);
+	@Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2)}", nativeQuery = true)
+	List<Map<String, Object>> ListaGenerales(@Param("opcion") int opcion, 
+	                                         @Param("tl_codigo") String tl_codigo,
+	                                         @Param("tl_clave") String tl_clave, 
+	                                         @Param("tl_descri1") String tl_descri1,
+	                                         @Param("tl_descri2") String tl_descri2);
 
-	@Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2,)}", nativeQuery = true)
-	List<Map<String, Object[]>> ListaGeneralesDetalle(@Param("opcion") int opcion, @Param("tl_codigo") String tl_codigo,
+
+	@Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2)}", nativeQuery = true)
+	List<Map<String, Object>> ListaGeneralesDetalle(@Param("opcion") int opcion, @Param("tl_codigo") String tl_codigo,
 	        @Param("tl_clave") String tl_clave, @Param("tl_descri1") String tl_descri1,
 	        @Param("tl_descri2") String tl_descri2);
 
