@@ -40,7 +40,7 @@ public class AuthenticationController {
 			autenticar(jwtRequest.getUsername(), jwtRequest.getPassword());
 		} catch (UsuarioNotFoundException exception) {
 			exception.printStackTrace();
-			throw new Exception("Usuario no encontrado");
+			 throw new Exception("Usuario no encontrado");
 		}
 
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
@@ -54,9 +54,9 @@ public class AuthenticationController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException exception) {
-			throw new Exception("USUARIO DESHABILITADO " + exception.getMessage());
+			throw new Exception("USUARIO DESHABILITADO ");
 		} catch (BadCredentialsException e) {
-			throw new Exception("Credenciales invalidas " + e.getMessage());
+			throw new Exception("Credenciales invalidas ");
 		}
 	}
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.naat.proyectofutbol.entidades.TbUsuario;
@@ -40,4 +39,5 @@ public interface TbUsuarioService {
 	public List<Map<String, Object[]>> listarPorCodigo(int opcion, TbUsuario obj);
 
 	public List<Map<String, Object[]>> ListarPorRol(int opcion, TbUsuario obj);
+	public List<Map<String, Object[]>> ListarPorUsuario(int opcion, TbUsuario obj);
 }

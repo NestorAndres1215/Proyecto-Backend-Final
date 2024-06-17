@@ -1,5 +1,9 @@
 package com.naat.proyectofutbol.repositorios;
 
-public interface TbReclamoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.naat.proyectofutbol.entidades.TbReclamo;
+
+public interface TbReclamoRepository  extends JpaRepository<TbReclamo,String>{
 
 }

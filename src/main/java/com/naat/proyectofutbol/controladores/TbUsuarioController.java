@@ -29,56 +29,50 @@ public class TbUsuarioController {
 
 	@PostMapping("/")
 	public ResponseEntity<Map<String, Object>> guardarUsuario(@RequestBody TbUsuario usuario) throws Exception {
-	    String ultimoCodigoUsuario = usuarioService.obtenerUltimoCodigoUsuario();
-	    System.out.print("El ultimo codido "+ultimoCodigoUsuario);
-	    String nuevoCodigoUsuario = String.valueOf(Integer.parseInt(ultimoCodigoUsuario) + 1);
-	    usuario.setUl_codigo("0" + nuevoCodigoUsuario);
-	    TbLogin user = new TbLogin();
-	    user.setUs_codigo("0" + nuevoCodigoUsuario);
-	    user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
-	    user.setUsername(usuario.getUsername());
-	    user.setUs_rol(usuario.getUl_rol());
-	    
-	    try {
-	        Map<String, Object> response = new HashMap<>();
+		String ultimoCodigoUsuario = usuarioService.obtenerUltimoCodigoUsuario();
+		System.out.print("El ultimo codido " + ultimoCodigoUsuario);
+		String nuevoCodigoUsuario = String.valueOf(Integer.parseInt(ultimoCodigoUsuario) + 1);
+		usuario.setUl_codigo("0" + nuevoCodigoUsuario);
+		TbLogin user = new TbLogin();
+		user.setUs_codigo("0" + nuevoCodigoUsuario);
+		user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+		user.setUsername(usuario.getUsername());
+		user.setUs_rol(usuario.getUl_rol());
 
-	        // Verificar si el usuario ya existe por nombre de usuario
-	        if (usuarioService.usuarioExistePorUsername(usuario.getUsername())) {
-	            response.put("error", "El nombre de usuario ya existe");
-	            return ResponseEntity.ok(response);
-	        }
+		try {
+			Map<String, Object> response = new HashMap<>();
 
-	        // Verificar si el usuario ya existe por correo electrónico
-	        if (usuarioService.usuarioExistePorEmail(usuario.getCorreo())) {
-	            response.put("error", "El correo electrónico ya existe");
-	            return ResponseEntity.ok(response);
-	        }
+			if (usuarioService.usuarioExistePorUsername(usuario.getUsername())) {
+				response.put("error", "El nombre de usuario ya existe");
+				return ResponseEntity.ok(response);
+			}
 
-	        // Verificar si el usuario ya existe por teléfono
-	        if (usuarioService.usuarioExistePorTelefono(usuario.getTelefono())) {
-	            response.put("error", "El teléfono ya existe");
-	            return ResponseEntity.ok(response);
-	        } 
-	        
-	        // Verificar si el teléfono es válido
-	        if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
-	            response.put("error", "El teléfono debe contener 9 dígitos");
-	            return ResponseEntity.ok(response);
-	        } 
-	        
-	        // Si no hay errores, guardar el usuario y el login
-	        TbLogin loginGuardado = usuarioService.guardarlogin(user);
-	        TbUsuario usuarioGuardado = usuarioService.guardarUsuario(usuario);
+			if (usuarioService.usuarioExistePorEmail(usuario.getCorreo())) {
+				response.put("error", "El correo electrónico ya existe");
+				return ResponseEntity.ok(response);
+			}
 
-	        response.put("usuario", usuarioGuardado);
-	        response.put("login", loginGuardado);
+			if (usuarioService.usuarioExistePorTelefono(usuario.getTelefono())) {
+				response.put("error", "El teléfono ya existe");
+				return ResponseEntity.ok(response);
+			}
 
-	        return ResponseEntity.ok(response);
-	    } catch (Exception e) {
-	        throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
-	    }
+			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
+				response.put("error", "El teléfono debe contener 9 dígitos");
+				return ResponseEntity.ok(response);
+			}
+
+			TbLogin loginGuardado = usuarioService.guardarlogin(user);
+			TbUsuario usuarioGuardado = usuarioService.guardarUsuario(usuario);
+
+			response.put("usuario", usuarioGuardado);
+			response.put("login", loginGuardado);
+
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
+		}
 	}
-
 
 	@GetMapping(value = { "/listaUsuario/" })
 	public ResponseEntity<List<Map<String, Object[]>>> ListaUsuario() throws Exception {
@@ -205,6 +199,30 @@ public class TbUsuarioController {
 		} catch (IOException e) {
 			return new ResponseEntity<>("Error subiendo la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@GetMapping(value = { "/listaUsuario/usuario/{usuario}" })
+	public ResponseEntity<List<Map<String, Object[]>>> ListaPorUsuario(@PathVariable("usuario") String usuario)
+			throws Exception {
+		List<Map<String, Object[]>> lista;
+		TbUsuario obj = new TbUsuario();
+
+		obj.setUl_codigo("");
+		obj.setUsername(usuario);
+		obj.setPassword("");
+		obj.setUl_nombre("");
+		obj.setUl_apellido("");
+		obj.setCorreo("");
+		obj.setTelefono("");
+		obj.setUl_direccion("");
+		obj.setUl_rol("");
+		try {
+			lista = usuarioService.ListarPorUsuario(5, obj);
+			return ResponseEntity.ok(lista);
+		} catch (Exception e) {
+			throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
+		}
+
 	}
 
 }

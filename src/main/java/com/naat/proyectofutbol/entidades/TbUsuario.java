@@ -53,7 +53,7 @@ public class TbUsuario {
 
 	public TbUsuario(String codigo, String username2, String password2, String ul_nombre2, String ul_apellido2,
 			String string, String correo2, String telefono2, String ul_direccion2, String ul_rol2, boolean ul_estado2) {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getUl_codigo() {
