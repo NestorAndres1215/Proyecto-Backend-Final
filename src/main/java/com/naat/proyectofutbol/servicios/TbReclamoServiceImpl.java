@@ -1,4 +1,4 @@
-package com.naat.proyectofutbol.servicios.impl;
+package com.naat.proyectofutbol.servicios;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;

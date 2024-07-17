@@ -18,7 +18,7 @@ public interface TbUsuarioRepository extends JpaRepository<TbUsuario, String> {
 	public TbUsuario findByUsername(String username);
 
 	boolean existsByUsername(String username);
-	
+	boolean existsByUsernameAndPassword(String username, String password);
     boolean existsByCorreo(String correo);
 
     boolean existsByTelefono(String telefono);

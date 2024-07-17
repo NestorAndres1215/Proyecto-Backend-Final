@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.naat.proyectofutbol.constrainst.Mensaje;
+import com.naat.proyectofutbol.constrainst.UsuarioError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +31,9 @@ public class TbUsuarioController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@PostMapping("/")
-	public ResponseEntity<Map<String, Object>> guardarUsuario(@RequestBody TbUsuario usuario) throws Exception {
+	public ResponseEntity<String> guardarUsuario(@RequestBody TbUsuario usuario) throws Exception {
 		String ultimoCodigoUsuario = usuarioService.obtenerUltimoCodigoUsuario();
-		System.out.print("El ultimo codido " + ultimoCodigoUsuario);
+
 		String nuevoCodigoUsuario = String.valueOf(Integer.parseInt(ultimoCodigoUsuario) + 1);
 		usuario.setUl_codigo("0" + nuevoCodigoUsuario);
 		TbLogin user = new TbLogin();
@@ -40,35 +43,24 @@ public class TbUsuarioController {
 		user.setUs_rol(usuario.getUl_rol());
 
 		try {
-			Map<String, Object> response = new HashMap<>();
 
 			if (usuarioService.usuarioExistePorUsername(usuario.getUsername())) {
-				response.put("error", "El nombre de usuario ya existe");
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(UsuarioError.USUARIO_EXISTENTE.getMensaje());
 			}
-
 			if (usuarioService.usuarioExistePorEmail(usuario.getCorreo())) {
-				response.put("error", "El correo electrónico ya existe");
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(UsuarioError.CORREO_EXISTENTE.getMensaje());
 			}
-
 			if (usuarioService.usuarioExistePorTelefono(usuario.getTelefono())) {
-				response.put("error", "El teléfono ya existe");
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(UsuarioError.TELEFONO_EXISTENTE.getMensaje());
 			}
-
 			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
-				response.put("error", "El teléfono debe contener 9 dígitos");
-				return ResponseEntity.ok(response);
+				return ResponseEntity.ok(UsuarioError.TELEFONO_DIGITOS.getMensaje());
 			}
 
-			TbLogin loginGuardado = usuarioService.guardarlogin(user);
-			TbUsuario usuarioGuardado = usuarioService.guardarUsuario(usuario);
+			 usuarioService.guardarlogin(user);
+			 usuarioService.guardarUsuario(usuario);
 
-			response.put("usuario", usuarioGuardado);
-			response.put("login", loginGuardado);
-
-			return ResponseEntity.ok(response);
+			return ResponseEntity.ok(Mensaje.REGISTRO.getMensaje());
 		} catch (Exception e) {
 			throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
 		}
@@ -116,6 +108,7 @@ public class TbUsuarioController {
 			response.put("success", true);
 			response.put("message", "Usuario actualizado correctamente");
 			response.put("login", loginGuardado);
+
 		} catch (Exception e) {
 
 			response.put("success", false);

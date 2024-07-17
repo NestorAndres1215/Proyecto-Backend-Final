@@ -1,4 +1,4 @@
-package com.naat.proyectofutbol.servicios.impl;
+package com.naat.proyectofutbol.servicios;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,15 +30,12 @@ public class TbCompaniaServiceImpl implements TbCompaniaService {
 
 	@Override
 	public TbCompania guardarImagen(String com_codigo, TbCompania obj, MultipartFile archivo) throws IOException {
-
 		Optional<TbCompania> usuarioOptional = repository.findById(com_codigo);
 		TbCompania usuario;
 		if (usuarioOptional.isPresent()) {
 			usuario = usuarioOptional.get();
 		} else {
 			usuario = new TbCompania();
-			// Update all fields
-
 			usuario.setCom_codigo(com_codigo);
 		}
 		usuario.setCom_nombre(obj.getCom_nombre());

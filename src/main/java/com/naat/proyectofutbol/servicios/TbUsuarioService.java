@@ -17,6 +17,7 @@ public interface TbUsuarioService {
 	boolean usuarioExistePorUsername(String username);
 
 	boolean usuarioExistePorEmail(String email);
+	boolean existsByUsernameAndPassword(String username, String password);
 
 	boolean usuarioExistePorTelefono(String telefono);
 	

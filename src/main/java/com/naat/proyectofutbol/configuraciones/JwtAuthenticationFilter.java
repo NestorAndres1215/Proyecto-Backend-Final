@@ -1,6 +1,6 @@
 package com.naat.proyectofutbol.configuraciones;
 
-import io.jsonwebtoken.ExpiredJwtException;
+import com.naat.proyectofutbol.constrainst.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.naat.proyectofutbol.servicios.impl.UserDetailsServiceImpl;
+import com.naat.proyectofutbol.servicios.UserDetailsServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,20 +31,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
-
         if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
             jwtToken = requestTokenHeader.substring(7);
 
             try{
                 username = this.jwtUtil.extractUsername(jwtToken);
-            }catch (ExpiredJwtException exception){
-                System.out.println("El token ha expirado");
             }catch (Exception e){
-                e.printStackTrace();
+                String errorMessage = Mensaje.TOKEN_INVALIDO.getMensaje();
+                response.getWriter().write(errorMessage);
+                return;
             }
 
-        }else{
-            System.out.println("Token invalido , no empieza con bearer string");
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -52,11 +49,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if(this.jwtUtil.validateToken(jwtToken,userDetails)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
-        }else{
-            System.out.println("El token no es valido");
+
         }
         filterChain.doFilter(request,response);
     }

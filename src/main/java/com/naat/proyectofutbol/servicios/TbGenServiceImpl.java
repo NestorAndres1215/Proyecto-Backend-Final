@@ -1,4 +1,4 @@
-package com.naat.proyectofutbol.servicios.impl;
+package com.naat.proyectofutbol.servicios;
 
 import java.util.List;
 import java.util.Map;

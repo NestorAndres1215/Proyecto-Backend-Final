@@ -1,4 +1,4 @@
-package com.naat.proyectofutbol.servicios.impl;
+package com.naat.proyectofutbol.servicios;
 
 import java.io.IOException;
 import java.util.List;
@@ -100,6 +100,11 @@ public class TbUsuarioServiceImpl implements TbUsuarioService {
 
 	public boolean usuarioExistePorEmail(String email) {
 		return usuarioRepository.existsByCorreo(email);
+	}
+
+	@Override
+	public boolean existsByUsernameAndPassword(String username, String password) {
+		return usuarioRepository.existsByUsernameAndPassword(username,password);
 	}
 
 	public boolean usuarioExistePorTelefono(String telefono) {
