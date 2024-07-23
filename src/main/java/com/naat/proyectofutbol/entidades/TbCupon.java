@@ -1,26 +1,32 @@
 package com.naat.proyectofutbol.entidades;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tbcupon")
 public class TbCupon {
 
 	@Id
-	private String cupon_Codigocupon; // PK
+	@Column(name = "cupon_Codigocupon")
+	private String codigo; // PK
 	private String cupon_Tipocupon;
 	private String cupon_Descripcion;
-	private String cupon_Fechainicio;
-	private String cupon_Fechafin;
-	private String cupon_Descuento;
+	private LocalDate cupon_Fechainicio;
+	private LocalDate cupon_Fechafin;
+	private int cupon_Descuento;
 	private String cupon_Condiciones;
 
-	public TbCupon(String cupon_Codigocupon, String cupon_Tipocupon, String cupon_Descripcion, String cupon_Fechainicio,
-			String cupon_Fechafin, String cupon_Descuento, String cupon_Condiciones) {
-		super();
-		this.cupon_Codigocupon = cupon_Codigocupon;
+
+
+	public TbCupon() {
+	}
+
+	public TbCupon(String codigo, String cupon_Tipocupon, String cupon_Descripcion, LocalDate cupon_Fechainicio, LocalDate cupon_Fechafin, int cupon_Descuento, String cupon_Condiciones) {
+		this.codigo = codigo;
 		this.cupon_Tipocupon = cupon_Tipocupon;
 		this.cupon_Descripcion = cupon_Descripcion;
 		this.cupon_Fechainicio = cupon_Fechainicio;
@@ -29,16 +35,12 @@ public class TbCupon {
 		this.cupon_Condiciones = cupon_Condiciones;
 	}
 
-	public TbCupon() {
-		super();
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public String getCupon_Codigocupon() {
-		return cupon_Codigocupon;
-	}
-
-	public void setCupon_Codigocupon(String cupon_Codigocupon) {
-		this.cupon_Codigocupon = cupon_Codigocupon;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getCupon_Tipocupon() {
@@ -57,27 +59,27 @@ public class TbCupon {
 		this.cupon_Descripcion = cupon_Descripcion;
 	}
 
-	public String getCupon_Fechainicio() {
+	public LocalDate getCupon_Fechainicio() {
 		return cupon_Fechainicio;
 	}
 
-	public void setCupon_Fechainicio(String cupon_Fechainicio) {
+	public void setCupon_Fechainicio(LocalDate cupon_Fechainicio) {
 		this.cupon_Fechainicio = cupon_Fechainicio;
 	}
 
-	public String getCupon_Fechafin() {
+	public LocalDate getCupon_Fechafin() {
 		return cupon_Fechafin;
 	}
 
-	public void setCupon_Fechafin(String cupon_Fechafin) {
+	public void setCupon_Fechafin(LocalDate cupon_Fechafin) {
 		this.cupon_Fechafin = cupon_Fechafin;
 	}
 
-	public String getCupon_Descuento() {
+	public int getCupon_Descuento() {
 		return cupon_Descuento;
 	}
 
-	public void setCupon_Descuento(String cupon_Descuento) {
+	public void setCupon_Descuento(int cupon_Descuento) {
 		this.cupon_Descuento = cupon_Descuento;
 	}
 
@@ -88,5 +90,4 @@ public class TbCupon {
 	public void setCupon_Condiciones(String cupon_Condiciones) {
 		this.cupon_Condiciones = cupon_Condiciones;
 	}
-
 }

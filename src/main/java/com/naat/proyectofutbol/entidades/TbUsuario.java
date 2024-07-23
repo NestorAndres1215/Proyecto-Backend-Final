@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "tbusuario")
@@ -54,6 +55,23 @@ public class TbUsuario {
 	public TbUsuario(String codigo, String username2, String password2, String ul_nombre2, String ul_apellido2,
 			String string, String correo2, String telefono2, String ul_direccion2, String ul_rol2, boolean ul_estado2) {
 		
+	}
+
+	@Override
+	public String toString() {
+		return "TbUsuario{" +
+				"ul_codigo='" + ul_codigo + '\'' +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", ul_nombre='" + ul_nombre + '\'' +
+				", ul_apellido='" + ul_apellido + '\'' +
+				", ul_perfil=" + Arrays.toString(ul_perfil) +
+				", correo='" + correo + '\'' +
+				", telefono='" + telefono + '\'' +
+				", ul_direccion='" + ul_direccion + '\'' +
+				", ul_rol='" + ul_rol + '\'' +
+				", ul_estado=" + ul_estado +
+				'}';
 	}
 
 	public String getUl_codigo() {

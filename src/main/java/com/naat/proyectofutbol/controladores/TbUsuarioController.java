@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.naat.proyectofutbol.constrainst.Mensaje;
 import com.naat.proyectofutbol.constrainst.UsuarioError;
+import com.naat.proyectofutbol.repositorios.TbUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,7 +82,9 @@ public class TbUsuarioController {
 		obj.setUl_direccion("");
 		obj.setUl_rol("");
 		try {
+			System.out.println(obj);
 			lista = usuarioService.listarUsuario(0, obj);
+
 			return ResponseEntity.ok(lista);
 		} catch (Exception e) {
 			throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
@@ -90,11 +93,14 @@ public class TbUsuarioController {
 	}
 
 	@PutMapping("/actualizarUsuario/")
-	public ResponseEntity<Map<String, Object>> actualizarUsuario(@RequestBody TbUsuario usuario) {
+	public ResponseEntity<String> actualizarUsuario(@RequestBody TbUsuario usuario) {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 
+			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
+				return ResponseEntity.ok(UsuarioError.TELEFONO_DIGITOS.getMensaje());
+			}
 			TbLogin user = new TbLogin();
 			user.setUs_codigo(usuario.getUl_codigo());
 			user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
@@ -108,14 +114,13 @@ public class TbUsuarioController {
 			response.put("success", true);
 			response.put("message", "Usuario actualizado correctamente");
 			response.put("login", loginGuardado);
+			return ResponseEntity.ok(response.toString());
 
 		} catch (Exception e) {
-
-			response.put("success", false);
-			response.put("message", "Error al actualizar usuario: " + e.getMessage());
+			return ResponseEntity.ok("Hubo un error");
 		}
 
-		return ResponseEntity.ok(response);
+
 	}
 
 	@DeleteMapping("/eliminarUsuario/{codigo}")

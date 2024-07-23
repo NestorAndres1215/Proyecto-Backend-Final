@@ -1,6 +1,8 @@
 package com.naat.proyectofutbol.controladores;
 
 import java.io.IOException;
+
+import com.naat.proyectofutbol.constrainst.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ public class TbReclamoController {
 		reclamoService.enviarCorreoDisculpas(destinatario, asunto, contenido);
 		reclamo.setRec_estado("Reclamo Recibido");
 		reclamoService.actualizarReclamo(reclamo);
-		return ResponseEntity.ok("Correo de disculpas enviado correctamente");
+		return ResponseEntity.ok(Mensaje.CORREO_ENVIADO.getMensaje());
 	}
 
 	@PostMapping("/")

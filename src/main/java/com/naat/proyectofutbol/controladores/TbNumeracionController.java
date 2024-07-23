@@ -1,15 +1,14 @@
 package com.naat.proyectofutbol.controladores;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.naat.proyectofutbol.constrainst.Numeracion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.naat.proyectofutbol.entidades.TbNumeracion;
 import com.naat.proyectofutbol.servicios.TbNumeracionService;
@@ -24,18 +23,19 @@ public class TbNumeracionController {
 	private TbNumeracionService service;
 
 	@GetMapping(value = { "/listar" })
-	public ResponseEntity<List<Map<String, Object[]>>> ListaNumeracion() throws Exception {
-		List<Map<String, Object[]>> lista;
-		TbNumeracion obj = new TbNumeracion();
-		try {
-
-			lista = service.listarNumeracion(0, obj);
-			return ResponseEntity.ok(lista);
-
-		} catch (Exception e) {
-			throw new Exception("Error  al listar");
-		}
-
+	public List<TbNumeracion> findAll(){
+		return service.findAll();
 	}
+
+	@PostMapping("/registrar")
+	public ResponseEntity<String> registroNumeracion(@RequestBody TbNumeracion numeracion) {
+		try {
+			service.RegistrarCompania(1, numeracion);
+			return ResponseEntity.ok(Numeracion.REGISTRO_NUMERACION.getMensaje());
+		} catch (Exception e) {
+			return ResponseEntity.ok(Numeracion.ERROR_REGISTRO.getMensaje());
+		}
+	}
+
 
 }

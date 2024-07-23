@@ -11,7 +11,9 @@ import com.naat.proyectofutbol.entidades.TbCompania;
 
 
 public interface TbCompaniaService {
-	public List<Map<String, Object[]>> listaCompania(int opcion, TbCompania obj);
-	public TbCompania guardarImagen(String com_codigo,TbCompania obj, MultipartFile archivo) throws IOException;
 
+	List<TbCompania> findAll();
+	public TbCompania guardarImagen(String com_codigo, TbCompania obj, MultipartFile archivo) throws IOException;
+	boolean telefonoEsValido(String telefono);
+	boolean rucesValido(String ruc);
 }

@@ -1,10 +1,12 @@
 package com.naat.proyectofutbol.entidades;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbnumeracion")
@@ -13,18 +15,20 @@ public class TbNumeracion {
 	private String num_codigo;
 	private String num_descripcion;
 	private String num_cantidad;
+
+	//@Temporal(TemporalType.TIMESTAMP)
+	//@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	//@JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
 	private LocalDate num_fecha;
 
+	public TbNumeracion() {
+	}
+
 	public TbNumeracion(String num_codigo, String num_descripcion, String num_cantidad, LocalDate num_fecha) {
-		super();
 		this.num_codigo = num_codigo;
 		this.num_descripcion = num_descripcion;
 		this.num_cantidad = num_cantidad;
 		this.num_fecha = num_fecha;
-	}
-
-	public TbNumeracion() {
-		super();
 	}
 
 	public String getNum_codigo() {
@@ -58,5 +62,4 @@ public class TbNumeracion {
 	public void setNum_fecha(LocalDate num_fecha) {
 		this.num_fecha = num_fecha;
 	}
-
 }

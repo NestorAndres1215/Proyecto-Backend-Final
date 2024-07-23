@@ -1,12 +1,14 @@
 package com.naat.proyectofutbol.controladores;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
-import com.naat.proyectofutbol.dto.CompaniaDTO;
+import com.naat.proyectofutbol.constrainst.Mensaje;
+import com.naat.proyectofutbol.constrainst.UsuarioError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -27,19 +29,6 @@ public class TbCompaniaController {
 	@Autowired
 	private TbCompaniaRepository repository;
 
-	@GetMapping(value = { "/listaCompania" })
-	public ResponseEntity<List<Map<String, Object[]>>> ListaCompania() throws Exception {
-		List<Map<String, Object[]>> lista;
-		TbCompania obj = new TbCompania();
-
-		try {
-			lista = service.listaCompania(0, obj);
-			return ResponseEntity.ok(lista);
-		} catch (Exception e) {
-			throw new Exception("Error : " + e.getMessage());
-		}
-
-	}
 
 	@GetMapping("/listar")
 	public List<TbCompania> obtenerCategoriasActivadas() {
@@ -48,20 +37,22 @@ public class TbCompaniaController {
 
 	@PutMapping("/actualizar/{com_codigo}")
 	public ResponseEntity<String> guardarCompania(@PathVariable String com_codigo,
-			@RequestParam("nombre") String nombre, @RequestParam("telefono") String telefono,
-			@RequestParam("direccion") String direccion, @RequestParam("correo") String correo,
-			@RequestParam("pais") String pais, @RequestParam("sector") String sector,
-			@RequestParam("descripcion") String descripcion, @RequestParam("ruc") String ruc,
-			@RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha,
-			@RequestParam("archivo") MultipartFile archivo) {
-
+															   @RequestParam("nombre") String nombre, @RequestParam("telefono") String telefono,
+															   @RequestParam("direccion") String direccion, @RequestParam("correo") String correo,
+															   @RequestParam("pais") String pais, @RequestParam("sector") String sector,
+															   @RequestParam("descripcion") String descripcion, @RequestParam("ruc") String ruc,
+															   @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha,
+															   @RequestParam("archivo") MultipartFile archivo) {
+		Map<String, Object> response = new HashMap<>();
 		try {
+			if (!service.telefonoEsValido(telefono)) {
+				return ResponseEntity.ok(UsuarioError.TELEFONO_DIGITOS.getMensaje());
+			}
+			if (!service.rucesValido(ruc)) {
+				return ResponseEntity.ok(Mensaje.RUC_DIGITOS.getMensaje());
+			}
 
 			TbCompania obj = new TbCompania();
-			if(archivo==null){
-				obj.setCom_logo(obj.getCom_logo());
-
-			}
 			obj.setCom_codigo(com_codigo);
 			obj.setCom_nombre(nombre);
 			obj.setCom_direccion(direccion);
@@ -74,11 +65,10 @@ public class TbCompaniaController {
 			obj.setCom_fecha_de_fundacion(fecha);
 
 			service.guardarImagen(com_codigo, obj, archivo);
+			return ResponseEntity.ok(Mensaje.REGISTRO.getMensaje());
 
-			return new ResponseEntity<>("SE REGISTRO CORRECTAMENTE", HttpStatus.OK);
 		} catch (IOException e) {
-			return new ResponseEntity<>("ERROR : " + e.getMessage(),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.ok("Error al procesar el archivo.");
 		}
 	}
 
