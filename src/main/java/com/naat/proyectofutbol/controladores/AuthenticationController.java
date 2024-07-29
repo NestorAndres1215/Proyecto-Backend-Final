@@ -1,18 +1,13 @@
 package com.naat.proyectofutbol.controladores;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.naat.proyectofutbol.constrainst.UsuarioError;
-import com.naat.proyectofutbol.repositorios.TbUsuarioRepository;
-import com.naat.proyectofutbol.servicios.TbUsuarioService;
+import com.naat.proyectofutbol.servicios.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,10 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.naat.proyectofutbol.configuraciones.JwtUtils;
-import com.naat.proyectofutbol.excepciones.UsuarioNotFoundException;
 import com.naat.proyectofutbol.modelo.JwtRequest;
 import com.naat.proyectofutbol.modelo.JwtResponse;
-import com.naat.proyectofutbol.modelo.TbLogin;
+import com.naat.proyectofutbol.modelo.Login;
 import com.naat.proyectofutbol.servicios.UserDetailsServiceImpl;
 
 @RestController
@@ -40,7 +34,7 @@ public class AuthenticationController {
 	@Autowired
 	private JwtUtils jwtUtils;
 	@Autowired
-	private TbUsuarioService usuarioService;
+	private UsuarioService usuarioService;
 	@PostMapping("/generate-token")
 	public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) throws Exception {
 		try {
@@ -61,8 +55,8 @@ public class AuthenticationController {
 	}
 
 	@GetMapping("/actual-usuario")
-	public TbLogin obtenerUsuarioActual(Principal principal) {
-		return (TbLogin) this.userDetailsService.loadUserByUsername(principal.getName());
+	public Login obtenerUsuarioActual(Principal principal) {
+		return (Login) this.userDetailsService.loadUserByUsername(principal.getName());
 	}
 
 }
