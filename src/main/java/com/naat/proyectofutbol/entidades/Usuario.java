@@ -12,8 +12,8 @@ import java.util.Arrays;
 public class Usuario {
 
 	@Id
-
-	private String ul_codigo;
+	@Column(name = "ul_codigo")
+	private String codigo;
 	@Column(name = "ul_usuario")
 	private String username;
 	@Column(name = "ul_contra")
@@ -35,7 +35,7 @@ public class Usuario {
 	public Usuario(String ul_codigo, String username, String password, String ul_nombre, String ul_apellido,
 				   byte[] perfil, String correo, String telefono, String ul_direccion, String ul_rol, boolean ul_estado) {
 		super();
-		this.ul_codigo = ul_codigo;
+		this.codigo = ul_codigo;
 		this.username = username;
 		this.password = password;
 		this.ul_nombre = ul_nombre;
@@ -60,7 +60,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario{" +
-				"ul_codigo='" + ul_codigo + '\'' +
+				"ul_codigo='" + codigo + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", ul_nombre='" + ul_nombre + '\'' +
@@ -75,11 +75,11 @@ public class Usuario {
 	}
 
 	public String getUl_codigo() {
-		return ul_codigo;
+		return codigo;
 	}
 
 	public void setUl_codigo(String ul_codigo) {
-		this.ul_codigo = ul_codigo;
+		this.codigo = ul_codigo;
 	}
 
 	public String getUsername() {

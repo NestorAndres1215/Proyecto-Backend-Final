@@ -9,6 +9,7 @@ public enum UsuarioError {
     TELEFONO_EXISTENTE("NUMERO DE TELEFONO DEL USUARIO YA EXISTE"),
     CORREO_EXISTENTE("Correo Electronico ya existe"),
     TELEFONO_DIGITOS("Numero de telefono debe tener solo 9 digitos"),
+
     BIENVENIDO("BIENVENIDOS"),
     ERROR_USUARIO("Credenciales Invalidas"),
     REGISTRO_USUARIO("Error al Actualizar Usuario");

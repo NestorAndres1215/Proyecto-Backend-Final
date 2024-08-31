@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naat.proyectofutbol.constrainst.Mensaje;
 import com.naat.proyectofutbol.constrainst.UsuarioError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,29 +86,28 @@ public class UsuarioController {
 	@PutMapping("/actualizarUsuario/")
 	public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario) {
 		Map<String, Object> response = new HashMap<>();
-
+				Login user = new Login();
+				user.setUs_codigo(usuario.getUl_codigo());
+				user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+				user.setUsername(usuario.getUsername());
+				user.setUs_rol(usuario.getUl_rol());
 		try {
 
 			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
 				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.TELEFONO_DIGITOS.getMensaje());
 			}
-			Login user = new Login();
-			user.setUs_codigo(usuario.getUl_codigo());
-			user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
-			user.setUsername(usuario.getUsername());
-			user.setUs_rol(usuario.getUl_rol());
 
-			Login loginGuardado = usuarioService.guardarlogin(user);
+			usuarioService.guardarlogin(user);
 
-			usuarioService.actualizarUsuario(1, usuario);
+			String loginGuardado =usuarioService.actualizarUsuario(1, usuario);
 
 			response.put("success", true);
 			response.put("message", "Usuario actualizado correctamente");
 			response.put("login", loginGuardado);
 			return ResponseEntity.ok(response.toString());
-
 		} catch (Exception e) {
-			return ResponseEntity.ok("Hubo un error");
+			// Maneja cualquier excepción que ocurra durante el proceso
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar el usuario.");
 		}
 
 
@@ -138,14 +138,6 @@ public class UsuarioController {
 		Usuario obj = new Usuario();
 
 		obj.setUl_codigo(codigo);
-		obj.setUsername("");
-		obj.setPassword("");
-		obj.setUl_nombre("");
-		obj.setUl_apellido("");
-		obj.setCorreo("");
-		obj.setTelefono("");
-		obj.setUl_direccion("");
-		obj.setUl_rol("");
 		try {
 			lista = usuarioService.listarPorCodigo(3, obj);
 			return ResponseEntity.ok(lista);
@@ -160,14 +152,6 @@ public class UsuarioController {
 		List<Map<String, Object[]>> lista;
 		Usuario obj = new Usuario();
 
-		obj.setUl_codigo("");
-		obj.setUsername("");
-		obj.setPassword("");
-		obj.setUl_nombre("");
-		obj.setUl_apellido("");
-		obj.setCorreo("");
-		obj.setTelefono("");
-		obj.setUl_direccion("");
 		obj.setUl_rol(rol);
 		try {
 			lista = usuarioService.ListarPorRol(4, obj);
@@ -195,15 +179,9 @@ public class UsuarioController {
 		List<Map<String, Object[]>> lista;
 		Usuario obj = new Usuario();
 
-		obj.setUl_codigo("");
+
 		obj.setUsername(usuario);
-		obj.setPassword("");
-		obj.setUl_nombre("");
-		obj.setUl_apellido("");
-		obj.setCorreo("");
-		obj.setTelefono("");
-		obj.setUl_direccion("");
-		obj.setUl_rol("");
+
 		try {
 			lista = usuarioService.ListarPorUsuario(5, obj);
 			return ResponseEntity.ok(lista);
@@ -212,5 +190,7 @@ public class UsuarioController {
 		}
 
 	}
+
+
 
 }
