@@ -45,16 +45,16 @@ public class UsuarioController {
 		try {
 
 			if (usuarioService.usuarioExistePorUsername(usuario.getUsername())) {
-				return ResponseEntity.ok(UsuarioError.USUARIO_EXISTENTE.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.USUARIO_EXISTENTE.getMensaje());
 			}
 			if (usuarioService.usuarioExistePorEmail(usuario.getCorreo())) {
-				return ResponseEntity.ok(UsuarioError.CORREO_EXISTENTE.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.CORREO_EXISTENTE.getMensaje());
 			}
 			if (usuarioService.usuarioExistePorTelefono(usuario.getTelefono())) {
-				return ResponseEntity.ok(UsuarioError.TELEFONO_EXISTENTE.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.TELEFONO_EXISTENTE.getMensaje());
 			}
 			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
-				return ResponseEntity.ok(UsuarioError.TELEFONO_DIGITOS.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.TELEFONO_DIGITOS.getMensaje());
 			}
 
 			 usuarioService.guardarlogin(user);
@@ -71,17 +71,8 @@ public class UsuarioController {
 		List<Map<String, Object[]>> lista;
 		Usuario obj = new Usuario();
 
-		obj.setUl_codigo("");
-		obj.setUsername("");
-		obj.setPassword("");
-		obj.setUl_nombre("");
-		obj.setUl_apellido("");
-		obj.setCorreo("");
-		obj.setTelefono("");
-		obj.setUl_direccion("");
-		obj.setUl_rol("");
 		try {
-			System.out.println(obj);
+
 			lista = usuarioService.listarUsuario(0, obj);
 
 			return ResponseEntity.ok(lista);
@@ -98,7 +89,7 @@ public class UsuarioController {
 		try {
 
 			if (!usuarioService.telefonoEsValido(usuario.getTelefono())) {
-				return ResponseEntity.ok(UsuarioError.TELEFONO_DIGITOS.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(UsuarioError.TELEFONO_DIGITOS.getMensaje());
 			}
 			Login user = new Login();
 			user.setUs_codigo(usuario.getUl_codigo());

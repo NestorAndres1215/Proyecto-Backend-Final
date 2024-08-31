@@ -23,7 +23,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 
     boolean existsByTelefono(String telefono);
 
-	@Query(value = "SELECT MAX(ul_codigo) FROM TbUsuario", nativeQuery = true)
+	@Query(value = "SELECT MAX(ul_codigo) FROM Usuario", nativeQuery = true)
 	String obtenerUltimoCodigo();
 
 	@Query(value = "{call SP_Usuario(:opcion, :ul_codigo, :ul_usuario, :ul_contra, "

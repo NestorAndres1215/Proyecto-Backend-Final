@@ -59,7 +59,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "TbUsuario{" +
+		return "Usuario{" +
 				"ul_codigo='" + ul_codigo + '\'' +
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
