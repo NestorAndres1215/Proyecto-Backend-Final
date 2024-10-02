@@ -27,7 +27,6 @@ public class SunatController {
 	public List<Object> swCrearTcb(
 			@PathVariable("mes") String mes,
 			@PathVariable("anio") String anio) throws Exception {
-		System.out.println(mes);
 		String url = "https://api.apis.net.pe/v1/tipo-cambio-sunat?month=" + mes + "&year=" + anio;
 
 		RestTemplate restTemplate = new RestTemplate();

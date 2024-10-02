@@ -12,10 +12,13 @@ import java.util.Map;
 
 public interface GenDevRepository extends JpaRepository<GeneralDev, String> {
 
-    @Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2)}", nativeQuery = true)
-    List<Map<String, Object>> ListaGeneralesDetalle(@Param("opcion") int opcion, @Param("tl_codigo") String codigo,
-                                                    @Param("tl_clave") String clave, @Param("tl_descri1") String descripcion,
-                                                    @Param("tl_descri2") String tl_descri2);
+    @Query(value = "CALL SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2)", nativeQuery = true)
+    List<Map<String, Object>> ListaGeneralesDetalle(@Param("opcion") int opcion,
+                                                    @Param("tl_codigo") String codigo,
+                                                    @Param("tl_clave") String clave,
+                                                    @Param("tl_descri1") String descripcion,
+                                                    @Param("tl_descri2") String tlDescri2);
+
     @Query(value = "{call SP_TablaGenerales(:opcion, :tl_codigo, :tl_clave, :tl_descri1, :tl_descri2)}", nativeQuery = true)
     @Transactional
     @Modifying

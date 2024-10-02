@@ -29,7 +29,7 @@ public interface UsuarioService {
 
 	public List<Map<String, Object[]>> listarUsuario(int opcion, Usuario obj);
 
-	void actualizarUsuario(int opcion, Usuario obj);
+	String actualizarUsuario(int opcion, Usuario obj);
 
 	void eliminarUsuario(int opcion, Usuario obj);
 

@@ -4,12 +4,13 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name = "compania")
 public class Compania {
-	private static final long serialVersionUID = 1L;
+
 	@Id
 
 	private String com_codigo;
@@ -22,11 +23,11 @@ public class Compania {
 	private String com_direccion;
 	private String com_pais;
 	private String com_sector;
-	 @Temporal(TemporalType.TIMESTAMP)
-	private Date com_fecha_de_fundacion;
+
+	private LocalDate com_fecha_de_fundacion;
 	private String com_descripcion;
 	public Compania(String com_codigo, String com_nombre, byte[] com_logo, String com_ruc, String com_telefono,
-					String com_correo, String com_direccion, String com_pais, String com_sector, Date com_fecha_de_fundacion,
+					String com_correo, String com_direccion, String com_pais, String com_sector, LocalDate com_fecha_de_fundacion,
 					String com_descripcion) {
 		super();
 		this.com_codigo = com_codigo;
@@ -99,10 +100,10 @@ public class Compania {
 		this.com_sector = com_sector;
 	}
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
-	public Date getCom_fecha_de_fundacion() {
+	public LocalDate getCom_fecha_de_fundacion() {
 		return com_fecha_de_fundacion;
 	}
-	public void setCom_fecha_de_fundacion(Date com_fecha_de_fundacion) {
+	public void setCom_fecha_de_fundacion(LocalDate com_fecha_de_fundacion) {
 		this.com_fecha_de_fundacion = com_fecha_de_fundacion;
 	}
 	public String getCom_descripcion() {
@@ -111,9 +112,7 @@ public class Compania {
 	public void setCom_descripcion(String com_descripcion) {
 		this.com_descripcion = com_descripcion;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 
 
 

@@ -1,6 +1,7 @@
 package com.naat.proyectofutbol.controladores;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 import com.naat.proyectofutbol.constrainst.Mensaje;
@@ -47,7 +48,7 @@ e.printStackTrace();
 															   @RequestParam("direccion") String direccion, @RequestParam("correo") String correo,
 															   @RequestParam("pais") String pais, @RequestParam("sector") String sector,
 															   @RequestParam("descripcion") String descripcion, @RequestParam("ruc") String ruc,
-															   @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha,
+															   @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
 															   @RequestParam("archivo") MultipartFile archivo) {
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -58,6 +59,7 @@ e.printStackTrace();
 				return ResponseEntity.ok(Mensaje.RUC_DIGITOS.getMensaje());
 			}
 
+			System.out.println(fecha);
 			Compania obj = new Compania();
 			obj.setCom_codigo(com_codigo);
 			obj.setCom_nombre(nombre);

@@ -4,7 +4,9 @@ package com.naat.proyectofutbol.controladores;
 import java.util.List;
 import java.util.Map;
 import com.naat.proyectofutbol.constrainst.TablaGenerales;
+import com.naat.proyectofutbol.constrainst.UsuarioError;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.naat.proyectofutbol.entidades.General;
@@ -24,10 +26,6 @@ public class GenController {
 	public ResponseEntity<List<Map<String, Object>>> ListaGenerales() throws Exception {
 		List<Map<String, Object>> lista;
 		General obj = new General();
-		obj.setCodigo("");
-		obj.setClave("");
-		obj.setDescripcion("");
-		obj.setTl_descri2("");
 		try {
 			lista = service.listarGenerales(1, obj);
 			return ResponseEntity.ok(lista);
@@ -39,14 +37,12 @@ public class GenController {
     public ResponseEntity<List<Map<String, Object>>> ListaGeneralesDetalle(@PathVariable("codigo") String codigo) {
         List<Map<String, Object>> lista;
         GeneralDev obj = new GeneralDev();
-        obj.setCodigo(codigo);
-        obj.setClave("");
-        obj.setDescripcion("");
-        obj.setTl_descri2("");
+			obj.setCodigo(codigo);
         try {
             lista = service.listarGeneralesDetalle(0, obj);
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
+			e.printStackTrace();
             return ResponseEntity.status(500).body(null);
         }
     }
@@ -63,6 +59,7 @@ public class GenController {
 			if (service.existsByDescripcion(obj.getDescripcion())) {
 				return ResponseEntity.ok(TablaGenerales.DESCRIPCION_EXISTE.getMensaje());
 			}
+
 			service.RegistrarTablaGeneral(2, obj);
 			return ResponseEntity.ok(TablaGenerales.REGISTRO_GENERALES.getMensaje());
 		} catch (Exception e) {
@@ -73,14 +70,16 @@ public class GenController {
 	public ResponseEntity<String> registrargeneralesdev(@RequestBody GeneralDev obj) {
 		try {
 			if (service.existsByClaveAndCodigo(obj.getClave(), obj.getCodigo())) {
-				return ResponseEntity.ok(TablaGenerales.CLAVE_CODIGO_EXISTENTE.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(TablaGenerales.CLAVE_CODIGO_EXISTENTE.getMensaje());
 			}
 			if (service.existeDescripcion(obj.getDescripcion())) {
-				return ResponseEntity.ok(TablaGenerales.DESCRIPCION_EXISTE.getMensaje());
+				return ResponseEntity.status(HttpStatus.HTTP_VERSION_NOT_SUPPORTED).body(TablaGenerales.DESCRIPCION_EXISTE.getMensaje());
 			}
+
 			service.RegistrarTablaGeneralDetalle(3, obj);
-			return ResponseEntity.ok(TablaGenerales.REGISTRO_DETALLES.getMensaje());
+			return ResponseEntity.ok("se registro");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.ok(TablaGenerales.ERROR_DETALLE.getMensaje());
 		}
 	}

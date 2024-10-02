@@ -44,12 +44,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public void actualizarUsuario(int opcion, Usuario obj) {
+	public String actualizarUsuario(int opcion, Usuario obj) {
 		usuarioRepository.ActualizarUsuario(opcion, obj.getUl_codigo(), obj.getUsername(), obj.getPassword(),
 				obj.getUl_nombre(), obj.getUl_apellido(), obj.getCorreo(), obj.getUl_direccion(), obj.getTelefono(),
 				obj.getUl_rol());
 
-	}
+        return null;
+    }
 
 	@Override
 	public void eliminarUsuario(int opcion, Usuario obj) {

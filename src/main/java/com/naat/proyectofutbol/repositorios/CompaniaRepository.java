@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.naat.proyectofutbol.entidades.Compania;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,6 @@ public interface CompaniaRepository extends JpaRepository<Compania, String> {
                                      @Param("com_Direccion") String com_direccion,
                                      @Param("com_Pais") String com_pais,
                                      @Param("com_Sector") String com_sector,
-                                     @Param("com_FechaDeFundacion") Date com_fecha_de_fundacion,
+                                     @Param("com_FechaDeFundacion") LocalDate com_fecha_de_fundacion,
                                      @Param("com_Descripcion") String com_descripcion);
 }

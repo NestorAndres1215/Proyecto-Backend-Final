@@ -8,6 +8,9 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naat.proyectofutbol.constrainst.Mensaje;
 import com.naat.proyectofutbol.constrainst.UsuarioError;
+import com.naat.proyectofutbol.response.UsuarioLoginResponse;
+import com.naat.proyectofutbol.util.Utilitarios;
+import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +35,14 @@ public class UsuarioController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@PostMapping("/")
-	public ResponseEntity<String> guardarUsuario(@RequestBody Usuario usuario) throws Exception {
+	public ResponseEntity<?> guardarUsuario(@RequestBody Usuario usuario) throws Exception {
 		String ultimoCodigoUsuario = usuarioService.obtenerUltimoCodigoUsuario();
 
-		String nuevoCodigoUsuario = String.valueOf(Integer.parseInt(ultimoCodigoUsuario) + 1);
-		usuario.setUl_codigo("0" + nuevoCodigoUsuario);
+
+		String nuevoCodigoUsuario= Utilitarios.incrementarSecuencia(ultimoCodigoUsuario);
+		usuario.setUl_codigo(nuevoCodigoUsuario);
 		Login user = new Login();
-		user.setUs_codigo("0" + nuevoCodigoUsuario);
+		user.setUs_codigo(nuevoCodigoUsuario);
 		user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
 		user.setUsername(usuario.getUsername());
 		user.setUs_rol(usuario.getUl_rol());
@@ -61,7 +65,8 @@ public class UsuarioController {
 			 usuarioService.guardarlogin(user);
 			 usuarioService.guardarUsuario(usuario);
 
-			return ResponseEntity.ok(Mensaje.REGISTRO.getMensaje());
+			UsuarioLoginResponse response = new UsuarioLoginResponse(usuario, user);
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			throw new Exception("Error HUR2006_B 1° + " + e.getMessage());
 		}
@@ -84,8 +89,8 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/actualizarUsuario/")
-	public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario) {
-		Map<String, Object> response = new HashMap<>();
+	public ResponseEntity<?> actualizarUsuario(@RequestBody Usuario usuario) {
+
 				Login user = new Login();
 				user.setUs_codigo(usuario.getUl_codigo());
 				user.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
@@ -99,12 +104,11 @@ public class UsuarioController {
 
 			usuarioService.guardarlogin(user);
 
-			String loginGuardado =usuarioService.actualizarUsuario(1, usuario);
+			usuarioService.actualizarUsuario(1, usuario);
 
-			response.put("success", true);
-			response.put("message", "Usuario actualizado correctamente");
-			response.put("login", loginGuardado);
-			return ResponseEntity.ok(response.toString());
+
+			UsuarioLoginResponse response = new UsuarioLoginResponse(usuario, user);
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			// Maneja cualquier excepción que ocurra durante el proceso
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar el usuario.");

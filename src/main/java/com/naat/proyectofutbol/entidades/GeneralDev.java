@@ -23,14 +23,12 @@ public class GeneralDev {
 		super();
 	}
 
-
 	public GeneralDev(String codigo, String clave, String descripcion, String tl_descri2) {
 		this.codigo = codigo;
 		this.clave = clave;
 		this.descripcion = descripcion;
 		this.tl_descri2 = tl_descri2;
 	}
-
 
 	public String getCodigo() {
 		return codigo;
