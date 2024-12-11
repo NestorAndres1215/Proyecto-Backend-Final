@@ -28,7 +28,7 @@ public class ProyectoFutbolApplication implements CommandLineRunner{
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.printf("SE HA INICIADO  EL SERVICIO DE BACKEND GENERAL CON EL PUERTO %s", PUERTO);
+		System.out.printf("SE HA INICIADO  EL SERVICIO DE BACKEND GENERAL CON EL PUERTO %s", PUERTO +"\n");
 	}
 
 }

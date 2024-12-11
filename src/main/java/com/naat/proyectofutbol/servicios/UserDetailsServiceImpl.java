@@ -5,9 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.naat.proyectofutbol.modelo.TbLogin;
+import com.naat.proyectofutbol.modelo.Login;
 
-import com.naat.proyectofutbol.repositorios.TbLoginRepository;
+import com.naat.proyectofutbol.repositorios.LoginRepository;
 
 
 
@@ -15,14 +15,14 @@ import com.naat.proyectofutbol.repositorios.TbLoginRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private TbLoginRepository usuarioRepository;
+	private LoginRepository usuarioRepository;
 
 
 	@Override
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		TbLogin usuario = this.usuarioRepository.findByUsername(username);
+		Login usuario = this.usuarioRepository.findByUsername(username);
 	        if(usuario == null){
 	            throw new UsernameNotFoundException("Usuario no encontrado");
 	        }
